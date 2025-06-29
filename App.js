@@ -1,3 +1,4 @@
+import TodoCount from './components/TodoCount.js';
 import TodoInput from './components/TodoInput.js';
 import TodoList from './components/TodoList.js';
 import { loadTodos, saveTodos } from './utils/storage.js';
@@ -14,6 +15,7 @@ function App() {
   const render = () => {
     document.querySelector('#app').innerHTML = '';
 
+    TodoCount({ todos });
     TodoInput({ onAdd });
     TodoList({ todos, onToggle, onDelete });
   };
