@@ -1,4 +1,5 @@
 import TodoInput from './components/TodoInput.js';
+import TodoList from './components/TodoList.js';
 import { loadTodos, saveTodos } from './utils/storage.js';
 
 function App() {
@@ -14,11 +15,23 @@ function App() {
     document.querySelector('#app').innerHTML = '';
 
     TodoInput({ onAdd });
+    TodoList({ todos, onToggle, onDelete });
   };
 
   const onAdd = (name) => {
     const newTodo = { name, isCompleted: false };
     setState([...todos, newTodo]);
+  };
+
+  const onToggle = (index) => {
+    const newTodos = [...todos];
+    newTodos[index].isCompleted = !newTodos[index].isCompleted;
+    setState(newTodos);
+  };
+
+  const onDelete = (index) => {
+    const newTodos = todos.filter((_, i) => i !== index);
+    setState(newTodos);
   };
 
   render();
