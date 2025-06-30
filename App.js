@@ -2,6 +2,7 @@ import TodoActions from './components/TodoActions.js';
 import TodoCount from './components/TodoCount.js';
 import TodoInput from './components/TodoInput.js';
 import TodoList from './components/TodoList.js';
+import TodoTitle from './components/TodoTitle.js';
 import { loadTodos, saveTodos } from './utils/storage.js';
 
 function App() {
@@ -14,12 +15,19 @@ function App() {
   };
 
   const render = () => {
-    document.querySelector('#app').innerHTML = '';
+    const app = document.querySelector('#app');
+    app.innerHTML = '';
 
-    TodoCount({ todos });
-    TodoInput({ onAdd });
-    TodoList({ todos, onToggle, onDelete });
-    TodoActions({ onClear, onCompleteAll });
+    const wrapBox = document.createElement('div');
+    wrapBox.className = 'todo-wrapper';
+
+    wrapBox.appendChild(TodoTitle());
+    wrapBox.appendChild(TodoCount({ todos }));
+    wrapBox.appendChild(TodoInput({ onAdd }));
+    wrapBox.appendChild(TodoList({ todos, onToggle, onDelete, onEdit, setEditing }));
+    wrapBox.appendChild(TodoActions({ onClear, onCompleteAll }));
+
+    app.appendChild(wrapBox);
   };
 
   const onAdd = (name) => {
@@ -35,6 +43,17 @@ function App() {
 
   const onDelete = (index) => {
     const newTodos = todos.filter((_, i) => i !== index);
+    setState(newTodos);
+  };
+
+  const onEdit = (index, newName) => {
+    const newTodos = [...todos];
+    newTodos[index].name = newName;
+    setState(newTodos);
+  };
+
+  const setEditing = (index, isEditing) => {
+    const newTodos = todos.map((todo, i) => (i === index ? { ...todo, isEditing } : todo));
     setState(newTodos);
   };
 

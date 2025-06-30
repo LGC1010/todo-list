@@ -1,4 +1,4 @@
-function TodoList({ todos, onToggle, onDelete }) {
+function TodoList({ todos, onToggle, onDelete, onEdit, setEditing }) {
   const todoList = document.createElement('ul');
   todoList.className = 'todo-list';
 
@@ -9,6 +9,7 @@ function TodoList({ todos, onToggle, onDelete }) {
       .map(
         (todo, index) => `
           <li class="todo-item">
+          <input type="checkbox" data-index="${index}" data-action="edit" ${todo.isEditing ? 'checked' : ''} />
             <p
               class="todo-name ${todo.isCompleted ? 'completed' : ''}" 
               data-index="${index}"
@@ -16,6 +17,19 @@ function TodoList({ todos, onToggle, onDelete }) {
             >
               ${todo.name}
             </p>
+            ${
+              todo.isEditing
+                ? `
+              <input 
+                type="text" 
+                value="${todo.name}" 
+                data-index="${index}" 
+                data-action="edit-title"
+                ${todo.isCompleted ? 'readonly' : ''}
+                class="${todo.isCompleted ? 'completed' : ''}"
+              />`
+                : ''
+            }
             <button class="delete-btn" data-index="${index}" data-action="delete">삭제</button>
           </li>
         `
@@ -35,7 +49,20 @@ function TodoList({ todos, onToggle, onDelete }) {
     }
   });
 
-  document.querySelector('#app').appendChild(todoList);
+  todoList.addEventListener('change', (e) => {
+    const action = e.target.dataset.action;
+    const index = Number(e.target.dataset.index);
+
+    if (action === 'edit') {
+      setEditing(index, e.target.checked);
+    }
+
+    if (action === 'edit-title') {
+      onEdit(index, e.target.value);
+    }
+  });
+
+  return todoList;
 }
 
 export default TodoList;
