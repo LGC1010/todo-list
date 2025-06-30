@@ -1,3 +1,4 @@
+import TodoActions from './components/TodoActions.js';
 import TodoCount from './components/TodoCount.js';
 import TodoInput from './components/TodoInput.js';
 import TodoList from './components/TodoList.js';
@@ -18,6 +19,7 @@ function App() {
     TodoCount({ todos });
     TodoInput({ onAdd });
     TodoList({ todos, onToggle, onDelete });
+    TodoActions({ onClear, onCompleteAll });
   };
 
   const onAdd = (name) => {
@@ -34,6 +36,15 @@ function App() {
   const onDelete = (index) => {
     const newTodos = todos.filter((_, i) => i !== index);
     setState(newTodos);
+  };
+
+  const onClear = () => {
+    setState([]);
+  };
+
+  const onCompleteAll = () => {
+    const completeTodos = todos.map((todo) => ({ ...todo, isCompleted: true }));
+    setState(completeTodos);
   };
 
   render();
