@@ -11,7 +11,7 @@ function TodoActions({ onClear, onCompleteAll }) {
   actionBox.querySelector('#complete-all-btn').addEventListener('click', onCompleteAll);
   actionBox.querySelector('#clear-all-btn').addEventListener('click', onClear);
 
-  document.querySelector('#app').appendChild(actionBox);
+  return actionBox;
 }
 
 export default TodoActions;

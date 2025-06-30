@@ -8,7 +8,7 @@ function TodoCount({ todos }) {
 
   countBox.innerHTML = `전체 ${total} / 완료 ${completed}`;
 
-  document.querySelector('#app').appendChild(countBox);
+  return countBox;
 }
 
 export default TodoCount;

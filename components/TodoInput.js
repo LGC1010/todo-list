@@ -1,11 +1,12 @@
 function TodoInput({ onAdd }) {
   const todoForm = document.createElement('form');
-  todoForm.className = 'todo-input';
+  todoForm.className = 'todo-form';
 
   todoForm.innerHTML = `
     <input
       type="text"
       id="todo-input"
+      autocomplete="off"
       placeholder="할 일을 입력하세요"
     />
     <button type="submit">추가</button>
@@ -22,7 +23,7 @@ function TodoInput({ onAdd }) {
     input.value = '';
   });
 
-  document.querySelector('#app').appendChild(todoForm);
+  return todoForm;
 }
 
 export default TodoInput;

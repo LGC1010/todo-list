@@ -9,27 +9,29 @@ function TodoList({ todos, onToggle, onDelete, onEdit, setEditing }) {
       .map(
         (todo, index) => `
           <li class="todo-item">
-          <input type="checkbox" data-index="${index}" data-action="edit" ${todo.isEditing ? 'checked' : ''} />
-            <p
-              class="todo-name ${todo.isCompleted ? 'completed' : ''}" 
-              data-index="${index}"
-              data-action="toggle"
-            >
-              ${todo.name}
-            </p>
-            ${
-              todo.isEditing
-                ? `
-              <input 
-                type="text" 
-                value="${todo.name}" 
-                data-index="${index}" 
-                data-action="edit-title"
-                ${todo.isCompleted ? 'readonly' : ''}
-                class="${todo.isCompleted ? 'completed' : ''}"
-              />`
-                : ''
-            }
+            <div class="todo-box">
+              <input type="checkbox" data-index="${index}" data-action="edit" ${todo.isEditing ? 'checked' : ''} />
+              <p
+                class="todo-name ${todo.isCompleted ? 'completed' : ''}" 
+                data-index="${index}"
+                data-action="toggle"
+              >
+                ${todo.name}
+              </p>
+              ${
+                todo.isEditing
+                  ? `
+                <input 
+                  type="text" 
+                  value="${todo.name}" 
+                  data-index="${index}" 
+                  data-action="edit-title"
+                  ${todo.isCompleted ? 'readonly' : ''}
+                  class="${todo.isCompleted ? 'completed' : ''}"
+                />`
+                  : ''
+              }
+            </div>
             <button class="delete-btn" data-index="${index}" data-action="delete">삭제</button>
           </li>
         `
